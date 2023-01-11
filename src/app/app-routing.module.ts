@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { GetAllPostService } from './services/post/get-all-post.service';
+import { GetPostService } from './services/post/get-post.service';
 
 const routes: Routes = [
   {
@@ -13,14 +15,20 @@ const routes: Routes = [
   },
   {
     path: 'post',
-    redirectTo:'/',
-    pathMatch:'full'
+    redirectTo: '/',
+    pathMatch: 'full',
   },
 
   {
-    path:'post/:postId',
-    loadChildren: () => import('./pages/post/post-detail/post-detail.module').then(m => m.PostDetailModule)
-  }
+    path: 'post/:postId',
+    resolve: {
+      response: GetPostService,
+    },
+    loadChildren: () =>
+      import('./pages/post/post-detail/post-detail.module').then(
+        (m) => m.PostDetailModule
+      ),
+  },
 ];
 
 @NgModule({
