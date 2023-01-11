@@ -1,1 +1,5 @@
-<p>home works!</p>
+<main class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-6 gap-5 p-10">
+
+  <app-blog *ngFor="let item of items" [id]="item._id" [content]="item.content" [date]="item.createdAt"  [title]="item.title" ></app-blog>
+
+</main>

@@ -1,0 +1,19 @@
+<a routerLink="/post/{{id}}">
+  <div class="flex-none bg-white overflow-hidden rounded-none  mb-4 cursor-pointer border-b-4 border-primary shadow-lg">
+    <div data-gatsby-image-wrapper="" class="">
+      <picture>
+        <img class="order-1 lg:order-2" class="w-full h-full" decoding="async" loading="lazy"
+          src="https://via.placeholder.com/500x350" alt="Post with picture" width="1" height="0.5609375">
+      </picture>
+    </div>
+    <div class="px-5 pt-10 pb-5 md:px-6 md:pt-6  flex flex-col items-start justify-between order-2 lg:order-1  ">
+      <div class="flex flex-wrap justify-start text-sm font-light mb-3 space-x-5"></div>
+      <h2 class="text-3xl w-full truncate font-semibold leading-10 uppercase line-clamp-1">{{title}}</h2>
+
+      <p class="text-base w-full truncate font-light my-4 line-clamp-4 w-90 mt-5">{{content}}</p>
+      <div class="flex flex-wrap justify-between text-sm md:text-xs xl:text-sm font-light text-gray mt-5">
+        <p class="mr-5">{{date | date:'fullDate'}}</p>
+      </div>
+    </div>
+  </div>
+</a>
