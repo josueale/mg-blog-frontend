@@ -10,8 +10,8 @@ interface User {}
 export class StorageService {
   constructor() {}
 
-  clearStorage() {
-    globalThis.localStorage.clear();
+  removeUser() {
+    globalThis.localStorage.removeItem(KEY);
   }
 
   // todo add user type (only _id?)

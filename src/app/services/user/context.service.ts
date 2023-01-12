@@ -9,13 +9,15 @@ import { UserContext } from 'src/app/types/user';
 export class UserContextService {
   constructor() {}
 
+  // shall we be using smt like this?
+  // private user: UserContext | null = null;
   user: UserContext | null = null;
 
   getUser() {
     return this.user;
   }
 
-  saveUser(user: UserContext) {
+  saveUser(user: UserContext | null) {
     this.user = user;
   }
 }

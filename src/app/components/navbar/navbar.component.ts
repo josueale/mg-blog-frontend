@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StorageService } from 'src/app/services/storage.service';
 import { UserContextService } from 'src/app/services/user/context.service';
 
 @Component({
@@ -6,9 +7,17 @@ import { UserContextService } from 'src/app/services/user/context.service';
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent implements OnInit {
-  constructor(private userContextSrv: UserContextService) {}
+  constructor(
+    private storageSvc: StorageService,
+    private userContextSrv: UserContextService
+  ) {}
 
   showAuthButtons = false;
+
+  handleLogOut() {
+    this.storageSvc.removeUser()
+    this.userContextSrv.saveUser(null)
+  }
 
   ngOnInit() {
     const user = this.userContextSrv.getUser();
@@ -16,5 +25,4 @@ export class NavbarComponent implements OnInit {
       this.showAuthButtons = true;
     }
   }
-
 }
