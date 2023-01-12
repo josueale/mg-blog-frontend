@@ -13,11 +13,8 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/home/home.module').then((m) => m.HomeModule),
   },
-  {
-    path: 'post',
-    redirectTo: '/',
-    pathMatch: 'full',
-  },
+  // posts
+  { path: 'post', redirectTo: '/', pathMatch: 'full' },
 
   {
     path: 'post/:postId',
@@ -27,6 +24,26 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/post/post-detail/post-detail.module').then(
         (m) => m.PostDetailModule
+      ),
+  },
+
+  // users
+
+  {
+    // auth protected?
+    path: 'user',
+    loadChildren: () =>
+      import('./pages/user/user-detail/user-detail.module').then(
+        (m) => m.UserDetailModule
+      ),
+  },
+
+  //
+  {
+    path: 'auth/register',
+    loadChildren: () =>
+      import('./pages/auth/register/register.module').then(
+        (m) => m.RegisterModule
       ),
   },
 ];
