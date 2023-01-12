@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from 'src/app/types/user';
+import { UserContext } from 'src/app/types/user';
 
 // Is using a service to handle a "state" as a react context?
 
@@ -9,13 +9,13 @@ import { User } from 'src/app/types/user';
 export class UserContextService {
   constructor() {}
 
-  user: User | null = null;
+  user: UserContext | null = null;
 
   getUser() {
     return this.user;
   }
 
-  saveUser(user: User){
-    this.user = user
+  saveUser(user: UserContext) {
+    this.user = user;
   }
 }

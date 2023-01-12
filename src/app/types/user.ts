@@ -14,3 +14,8 @@ export interface UserLogin {
   user:           User;
   token:          string;
 }
+
+export interface UserContext extends User {
+  token:            string
+  isAuthenticated:  boolean
+}

@@ -17,13 +17,19 @@
             aria-current="page">Home</a> -->
         </li>
 
-        <li>
-          <a routerLink="/auth/register" routerLinkActive="md:text-blue-700"
+        <li *ngIf="!showAuthButtons">
+          <a routerLink="/user" routerLinkActive="md:text-blue-700"
             class="block py-2 pl-3 pr-4 text-white rounded md:bg-transparent md:p-0 dark:text-white"
-            aria-current="page">Registro</a>
+            aria-current="page">My profile</a>
         </li>
 
-        <li>
+        <li *ngIf="showAuthButtons">
+          <a routerLink="/auth/register" routerLinkActive="md:text-blue-700"
+            class="block py-2 pl-3 pr-4 text-white rounded md:bg-transparent md:p-0 dark:text-white"
+            aria-current="page">Register</a>
+        </li>
+
+        <li *ngIf="showAuthButtons">
           <a routerLink="/auth/login" routerLinkActive="md:text-blue-700"
             class="block py-2 pl-3 pr-4 text-white rounded md:bg-transparent md:p-0 dark:text-white"
             aria-current="page">Login</a>

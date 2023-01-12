@@ -31,7 +31,17 @@ export class AppComponent implements OnInit {
 
       this.userLoginSrv.loginByToken(token).subscribe((result) => {
         if (result.status === 'success') {
-          this.userContextSrv.saveUser(result.value.user);
+          this.userContextSrv.saveUser({
+            isAuthenticated: result.value.authenticated,
+            token: result.value.token,
+
+            _id: result.value.user._id,
+            email: result.value.user.email,
+            name: result.value.user.name,
+            lastname: result.value.user.lastname,
+            createdAt: result.value.user.createdAt,
+            updatedAt: result.value.user.updatedAt,
+          });
           this.storageSrv.saveUser(result.value.token);
         }
       });
