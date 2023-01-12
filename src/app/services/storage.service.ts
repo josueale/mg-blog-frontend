@@ -15,12 +15,12 @@ export class StorageService {
   }
 
   // todo add user type (only _id?)
-  public saveUser(user: any) {
+  public saveUser(token: string) {
     globalThis.localStorage.removeItem(KEY);
-    globalThis.localStorage.setItem(KEY, JSON.stringify(user));
+    globalThis.localStorage.setItem(KEY, JSON.stringify(token));
   }
 
-  public getUser(): User | null {
+  public getUser(): string | null {
     const raw = globalThis.localStorage.getItem(KEY);
 
     if (raw) {
