@@ -7,6 +7,7 @@ import { GetPostService } from './services/post/get-post.service';
 const routes: Routes = [
   {
     path: '',
+    pathMatch:'full',
     resolve: {
       response: GetAllPostService,
     },
@@ -44,6 +45,14 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/auth/register/register.module').then(
         (m) => m.RegisterModule
+      ),
+  },
+  //
+  {
+    path: 'auth/login',
+    loadChildren: () =>
+      import('./pages/auth/login/login.module').then(
+        (m) => m.LoginModule
       ),
   },
 ];

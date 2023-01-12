@@ -6,7 +6,6 @@ import { Post } from 'src/app/types/post';
 @Component({
   selector: 'app-post-detail',
   templateUrl: './post-detail.component.html',
-  styleUrls: ['./post-detail.component.css'],
 })
 export class PostDetailComponent implements OnInit {
   post: Post = {
