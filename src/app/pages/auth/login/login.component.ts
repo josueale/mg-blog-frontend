@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -22,7 +22,7 @@ export class LoginComponent {
     );
   }
 
-  handleOnSubmit({ value: form }: NgForm) {
+  handleOnSubmit({ value: form }: FormGroup) {
     // TODO validate answer
     // TODO add toast (even if its boring AF)
     // ?  redirect to login???
