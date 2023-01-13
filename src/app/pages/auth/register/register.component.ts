@@ -3,6 +3,8 @@ import { FormControl, FormGroup, NgForm } from '@angular/forms';
 
 import { getPasswordStrength } from 'src/app/helpers/password';
 import { RegisterService } from 'src/app/services/user/register.service';
+import { RegisterForm } from 'src/app/types/auth.interface';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -10,7 +12,7 @@ import { RegisterService } from 'src/app/services/user/register.service';
 export class RegisterComponent implements OnInit {
   formGroup!: FormGroup;
 
-  form = {
+  form: RegisterForm = {
     name: '',
     lastname: '',
 
@@ -30,8 +32,6 @@ export class RegisterComponent implements OnInit {
   }
 
   handleOnSubmit({ value: form }: NgForm) {
-    console.log(form);
-
     this.userSvc.register(form).subscribe({
       next(response) {
         if (response.status === 'success') {

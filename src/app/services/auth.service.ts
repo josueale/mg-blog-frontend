@@ -7,6 +7,7 @@ import { Api } from '../types/api';
 import { User, UserLogin } from '../types/user';
 
 import { API } from '../environments/environments';
+import { LoginForm, RegisterForm } from '../types/auth.interface';
 import { StorageService } from './storage.service';
 
 interface UserData {
@@ -39,7 +40,7 @@ export class AuthService {
   private storageSrv = inject(StorageService);
   private router = inject(Router);
 
-  private app: AppContext | null = initialState;
+  private app: AppContext = initialState;
 
   get auth() {
     return { ...this.app };
@@ -62,12 +63,12 @@ export class AuthService {
   }
 
   logout() {
-    this.app = null;
+    this.app = initialState;
     this.storageSrv.removeUser();
     this.router.navigate(['/']);
   }
 
-  login(credentials: any) {
+  login(credentials: LoginForm) {
     return this.clientHttp
       .post<Api<UserLogin>>(`${API}/api/v1/users/login`, credentials)
       .pipe(
@@ -105,8 +106,15 @@ export class AuthService {
       );
   }
 
+  register(credentials: RegisterForm) {
+    return this.clientHttp.post<Api<User>>(
+      `${API}/api/v1/users/register`,
+      credentials
+    );
+  }
+
   setAppContext(
-    newState: AppContext | ((prevState: AppContext | null) => AppContext)
+    newState: AppContext | ((prevState: AppContext) => AppContext)
   ) {
     if (typeof newState === 'function') {
       this.app = newState(this.app);
