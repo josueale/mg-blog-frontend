@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
     this.userSvc.register(form).subscribe({
       next(response) {
         if (response.status === 'success') {
-          alert(response.message);
+          console.log(response.message);
         }
       },
     });

@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthGuard } from './guards/auth.guard';
 import { GetAllPostService } from './services/post/get-all-post.service';
 import { GetPostService } from './services/post/get-post.service';
 
 const routes: Routes = [
   {
     path: '',
-    pathMatch:'full',
+    pathMatch: 'full',
     resolve: {
       response: GetAllPostService,
     },
@@ -16,6 +17,17 @@ const routes: Routes = [
   },
   // posts
   { path: 'post', redirectTo: '/', pathMatch: 'full' },
+
+  {
+    path: 'post/create',
+    canMatch: [AuthGuard],
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      // temporal
+      import('./pages/post/post-detail/post-detail.module').then(
+        (m) => m.PostDetailModule
+      ),
+  },
 
   {
     path: 'post/:postId',
@@ -33,6 +45,8 @@ const routes: Routes = [
   {
     // auth protected?
     path: 'user',
+    canMatch: [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./pages/user/user-detail/user-detail.module').then(
         (m) => m.UserDetailModule
@@ -51,9 +65,7 @@ const routes: Routes = [
   {
     path: 'auth/login',
     loadChildren: () =>
-      import('./pages/auth/login/login.module').then(
-        (m) => m.LoginModule
-      ),
+      import('./pages/auth/login/login.module').then((m) => m.LoginModule),
   },
 ];
 

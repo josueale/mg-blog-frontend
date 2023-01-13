@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { StorageService } from 'src/app/services/storage.service';
-import { LoginService } from 'src/app/services/user/login.service';
-
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,29 +13,9 @@ export class LoginComponent {
     password: '',
   };
 
-  constructor(
-    private userSvc: LoginService,
-    private storageSvc: StorageService
-  ) {}
-
-  storage() {
-    return this.storageSvc;
-  }
+  constructor(private authSvc: AuthService) {}
 
   handleOnSubmit({ value: form }: NgForm) {
-    console.log(form);
-
-    const saveToken = (token: string) => {
-      this.storageSvc.saveUser(token);
-    };
-
-    this.userSvc.login(form).subscribe({
-      next(response) {
-        if (response.status === 'success') {
-          alert(response.message);
-          saveToken(response.value.token);
-        }
-      },
-    });
+    this.authSvc.login(form).subscribe();
   }
 }

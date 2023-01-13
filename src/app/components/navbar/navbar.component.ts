@@ -1,28 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { StorageService } from 'src/app/services/storage.service';
-import { UserContextService } from 'src/app/services/user/context.service';
+import { Component, OnInit, inject } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent implements OnInit {
-  constructor(
-    private storageSvc: StorageService,
-    private userContextSrv: UserContextService
-  ) {}
+  constructor() {}
 
-  showAuthButtons = false;
+  private authSrv = inject(AuthService);
+
+  get auth() {
+    return this.authSrv.auth;
+  }
 
   handleLogOut() {
-    this.storageSvc.removeUser()
-    this.userContextSrv.saveUser(null)
+    this.authSrv.logout();
   }
 
-  ngOnInit() {
-    const user = this.userContextSrv.getUser();
-    if (user?.isAuthenticated) {
-      this.showAuthButtons = true;
-    }
-  }
+  ngOnInit() {}
 }
