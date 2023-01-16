@@ -1,19 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { CommentsComponent } from 'src/app/shared/components/comments/comments.component';
 import { PostDetailRoutingModule } from './post-detail-routing.module';
-
-import { CommentListComponent } from 'src/app/components/comment-list/comment-list.component';
-import { CommentListModule } from 'src/app/components/comment-list/comment-list.module';
+import { PostDetailComponent } from './post-detail.component';
 
 @NgModule({
-  declarations: [
-    CommentListComponent,
-  ],
-  imports: [
-    CommonModule,
-    PostDetailRoutingModule,
-    CommentListModule,
-  ]
+  declarations: [PostDetailComponent],
+  imports: [CommonModule, PostDetailRoutingModule, CommentsComponent],
 })
-export class PostDetailModule { }
+export class PostDetailModule {}

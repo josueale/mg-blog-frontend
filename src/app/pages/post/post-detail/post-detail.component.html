@@ -19,10 +19,11 @@
           {{post.title}}</h1>
       </header>
 
-      <p class="text-white">{{ post.content }}</p>
+      <p class="text-white mb-10">{{ post.content }}</p>
 
-      <!-- <app-comment-list></app-comment-list> -->
+      <item-comments [id]="post._id" />
 
     </article>
+
   </div>
 </main>
