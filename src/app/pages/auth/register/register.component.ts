@@ -1,37 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { getPasswordStrength } from 'src/app/helpers/password';
 import { RegisterService } from 'src/app/services/user/register.service';
-import { RegisterForm } from 'src/app/types/auth.interface';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
 })
 export class RegisterComponent implements OnInit {
-  formGroup!: FormGroup;
+  constructor(private userSvc: RegisterService, private fb: FormBuilder) {}
 
-  form: RegisterForm = {
-    name: '',
-    lastname: '',
+  passwordPills = [1, 2, 3, 4];
 
-    email: '',
-    password: '',
-    terms_acepted: false,
-  };
+  registerForm: FormGroup = this.fb.group({
+    name: ['', Validators.required],
+    lastname: ['', Validators.required],
+    email: ['', Validators.required],
+    password: ['', Validators.required],
+    terms_acepted: [false, Validators.requiredTrue],
+  });
 
   allowedToSubmit = false;
 
   passwordScore = 0;
 
-  constructor(private userSvc: RegisterService) {}
+  validateInput(name: string) {
+    return (
+      !this.registerForm.controls[name].valid &&
+      this.registerForm.controls[name].touched
+    );
+  }
 
   handlePassword(value: string) {
     this.passwordScore = getPasswordStrength(value);
   }
 
-  handleOnSubmit({ value: form }: NgForm) {
+  handleOnSubmit({ value: form }: FormGroup) {
     this.userSvc.register(form).subscribe({
       next(response) {
         if (response.status === 'success') {
@@ -41,13 +46,14 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  // how to implement this ??
-  ngOnInit() {
-    this.formGroup = new FormGroup({
-      name: new FormControl(''),
-      lastname: new FormControl(''),
-      email: new FormControl(''),
-      password: new FormControl(''),
+  onChanges(): void {
+    // suscribes to password input in order to update passwordScore
+    this.registerForm.get('password')?.valueChanges?.subscribe((value) => {
+      this.handlePassword(value);
     });
+  }
+
+  ngOnInit() {
+    this.onChanges();
   }
 }

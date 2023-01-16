@@ -9,26 +9,25 @@
         </h1>
 
         <!-- Form -->
-        <form class="space-y-4 md:space-y-6" #registerForm="ngForm">
+        <form [formGroup]="registerForm" (submit)="handleOnSubmit(registerForm)" class="space-y-4 md:space-y-6">
           <div class="flex gap-5">
 
             <div class="w-1/2">
               <label for="nameRegisterInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
                 name💫</label>
-              <input [(ngModel)]='form.name' name="name" #name="ngModel" type="text" id="nameRegisterInput"
+              <input name="name" type="text" id="nameRegisterInput" formControlName="name"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Lorem">
-              <div *ngIf="!name.valid && name.pristine" class="text-red-500 text-xs">Must provide a name</div>
+              <div *ngIf="validateInput('name')" class="text-red-500 text-xs">Must provide a name</div>
             </div>
 
             <div class="w-1/2">
               <label for="lastnameRegisterInput"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lastname</label>
-              <input [(ngModel)]='form.lastname' name="lastname" #lastname="ngModel" type="text"
-                id="lastnameRegisterInput"
+              <input name="lastname" type="text" id="lastnameRegisterInput" formControlName="lastname"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="ipsum">
-              <div *ngIf="!lastname.valid && lastname.pristine" class="text-red-500 text-xs">Must provide a lastname
+              <div *ngIf="validateInput('lastname')" class="text-red-500 text-xs">Must provide a lastname
               </div>
             </div>
 
@@ -38,44 +37,43 @@
             <label for="emailRegiterInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
               email</label>
 
-            <input required [(ngModel)]='form.email' name="email" #email="ngModel" type="email" name="email"
-              id="emailRegiterInput"
+            <input required name="email" type="email" name="email" id="emailRegiterInput" formControlName="email"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="example@materiagris.pe">
 
-            <div *ngIf="!email.valid && email.pristine" class="text-red-500 text-xs">Must provide a email</div>
+            <div *ngIf="validateInput('email')" class="text-red-500 text-xs">Must provide a email</div>
           </div>
 
           <div>
             <label for="passwordRegiterInput"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-            <input [(ngModel)]='form.password' (ngModelChange)="handlePassword($event)" name="password"
-              #password="ngModel" id="passwordRegiterInput" type="password" placeholder="••••••••"
+            <input name="password" id="passwordRegiterInput" type="password" placeholder="••••••••"
+              formControlName="password"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required>
 
             <!-- Password strengh meter -->
             <div class="flex mt-2 -mx-1">
-              <div class="w-1/4 px-1" *ngFor="let i of [1,2,3,4]">
+              <div class="w-1/4 px-1" *ngFor="let pill of passwordPills">
                 <div class="h-2 rounded-xl transition-colors bg-green-500" [ngClass]="{
-                      'bg-gray-50': i > passwordScore,
-                      'bg-red-400': i <= passwordScore && passwordScore >= 1,
-                      'bg-yellow-400': i <= passwordScore && passwordScore >= 2,
-                      'bg-green-500': i  <= passwordScore && passwordScore >= 4
+                      'bg-gray-50': pill > passwordScore,
+                      'bg-red-400': pill <= passwordScore && passwordScore >= 1,
+                      'bg-yellow-400': pill <= passwordScore && passwordScore >= 2,
+                      'bg-green-500':  pill <= passwordScore && passwordScore >= 3
                     }">
                 </div>
               </div>
             </div>
 
-            <div *ngIf="password.pristine" class="text-red-500 text-xs">Must provide a password</div>
+            <div *ngIf="validateInput('password')" class="text-red-500 text-xs">Must provide a password</div>
 
           </div>
 
 
           <div class="flex items-start">
             <div class="flex items-center h-5">
-              <input id="terms" aria-describedby="terms" type="checkbox" [(ngModel)]='form.terms_acepted'
-                name="termsAceptedRegisterInput" #terms_acepted="ngModel"
+              <input id="terms" aria-describedby="terms" type="checkbox" name="termsAceptedRegisterInput"
+                formControlName="terms_acepted"
                 class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                 required>
             </div>
@@ -87,13 +85,13 @@
             </div>
           </div>
 
-          <button [disabled]="registerForm.invalid" (click)="handleOnSubmit(registerForm)" type="submit"
+          <button [disabled]="registerForm.invalid" type="submit"
             class="w-full text-white bg-gray-800 disabled:opacity-25 hover:bg-gray-600 disabled:hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-800 dark:hover:bg-gray-700 disabled:dark:hover:bg-gray-800 dark:focus:ring-primary-800">Create
             an account</button>
           <p class="text-sm font-light text-gray-500 dark:text-gray-400">
             Already have an account?
-            <!-- add routerLink -->
-            <a href="#" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+            <a routerLink="/auth/login" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login
+              here</a>
           </p>
         </form>
       </div>
