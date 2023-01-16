@@ -24,8 +24,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () =>
       // temporal
-      import('./pages/post/post-detail/post-detail.module').then(
-        (m) => m.PostDetailModule
+      import('./pages/post/create/create.module').then(
+        (m) => m.CreateModule
       ),
   },
 

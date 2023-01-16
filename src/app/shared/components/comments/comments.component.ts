@@ -10,6 +10,7 @@ interface Comment {
 
 interface PostComment {
   _id: string;
+  user?: any
   comments: Comment[];
 }
 
@@ -24,6 +25,7 @@ export class CommentsComponent implements OnInit {
 
   public value: PostComment = {
     _id: this.id,
+    user: null,
     comments: [],
   };
 
