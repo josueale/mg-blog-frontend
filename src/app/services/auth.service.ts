@@ -62,6 +62,10 @@ export class AuthService {
     return of(false);
   }
 
+  saveUser(token:string){
+    this.storageSrv.saveUser(token)
+  }
+
   logout() {
     this.app = initialState;
     this.storageSrv.removeUser();
@@ -73,6 +77,7 @@ export class AuthService {
       .post<Api<UserLogin>>(`${API}/api/v1/users/login`, credentials)
       .pipe(
         tap((res) => {
+          this.saveUser(res.value.token)
           this.app = {
             isAuthenticated: true,
             isExpired: false,
