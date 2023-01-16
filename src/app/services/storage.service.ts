@@ -14,9 +14,8 @@ export class StorageService {
     globalThis.localStorage.removeItem(KEY);
   }
 
-  // todo add user type (only _id?)
   public saveUser(token: string) {
-    globalThis.localStorage.removeItem(KEY);
+    this.removeUser();
     globalThis.localStorage.setItem(KEY, JSON.stringify(token));
   }
 
