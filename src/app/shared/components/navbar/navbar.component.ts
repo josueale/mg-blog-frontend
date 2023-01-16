@@ -1,13 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
 })
-export class NavbarComponent implements OnInit {
-  constructor() {}
-
+export class NavbarComponent {
   private authSrv = inject(AuthService);
 
   get auth() {
@@ -17,6 +15,4 @@ export class NavbarComponent implements OnInit {
   handleLogOut() {
     this.authSrv.logout();
   }
-
-  ngOnInit() {}
 }
