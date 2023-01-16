@@ -34,7 +34,7 @@ const initialState = {
   providedIn: 'root',
 })
 export class AuthService {
-  constructor() {}
+  constructor() { }
 
   private clientHttp = inject(HttpClient);
   private storageSrv = inject(StorageService);
@@ -51,18 +51,24 @@ export class AuthService {
 
     if (!token) return of(false);
 
-    this.loginByToken(token).subscribe((res) => {
-      if (res.status === 'success') {
-        return of(true);
-      }
+    return of(true);
 
-      return of(false);
-    });
+    // huh?
+    // this.loginByToken(token).subscribe((res) => {
+    //   console.log('4');
+    //   if (res.status === 'success') {
+    //     console.log('5');
+    //     console.log(res);
+    //     return of(true);
+    //   }
+    //   console.log('6');
 
-    return of(false);
+    //   return of(false);
+    // });
+
   }
 
-  saveUser(token:string){
+  saveUser(token: string) {
     this.storageSrv.saveUser(token)
   }
 
